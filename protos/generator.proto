@@ -1,0 +1,23 @@
+syntax = "proto3";
+package generator;
+option go_package = "./generator";
+
+message Code {string code = 1;}
+
+message Codes {
+  repeated string codes = 1;
+}
+
+message GenerateUniqueCodeRequest {}
+
+message GenerateUniqueCodesRequest {
+  int32 count = 1;
+}
+
+service Generator {
+
+  rpc GenerateUniqueCode (GenerateUniqueCodeRequest) returns (Code) {}
+
+  rpc GenerateUniqueCodes (GenerateUniqueCodesRequest) returns (Codes) {}
+
+}

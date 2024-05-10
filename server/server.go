@@ -47,15 +47,16 @@ func newServer() *generatorServer {
 
 func main() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+	log.Printf("gPRC Server listening on %v", lis.Addr())
+
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterGeneratorServer(grpcServer, newServer())
 	err = grpcServer.Serve(lis)
-	log.Printf("gPRC Server started at http://localhost:%v", port)
 	if err != nil {
 		return
 	}

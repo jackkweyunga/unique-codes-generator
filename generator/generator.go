@@ -23,12 +23,10 @@ func GenIdsWithSonyFlake(count int32) ([]string, error) {
 	numThreads := int32(runtime.NumCPU())
 	runtime.GOMAXPROCS(int(numThreads))
 
-	allCodes := make([]string, 0, numThreads)
-
 	var countPerThread = count / numThreads
 	ch := make(chan []string)
 
-	threads := make([][]string, numThreads)
+	threads := make([]string, 0, count)
 
 	startRun := time.Now()
 
@@ -50,13 +48,11 @@ func GenIdsWithSonyFlake(count int32) ([]string, error) {
 	}
 
 	for i := 0; i < int(numThreads); i++ {
-		threads[i] = <-ch
+		threads = append(threads, <-ch...)
 	}
 
-	fmt.Printf("%v", threads)
-
 	elapsedRun := time.Since(startRun)
-	fmt.Printf("Multi-threaded run took %s\n", elapsedRun)
+	log.Printf("[GENERATOR] Took %s to generate %v codes", elapsedRun, count)
 
-	return allCodes, nil
+	return threads, nil
 }

@@ -3,5 +3,5 @@ env
 venv
 .venv
 sample.py
-
+*.exe
 .idea

@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=69.*", "setuptools_scm[toml]>=8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ucg_client"
+dynamic = ["version"]
+authors = [
+  { name="Jack Kweyunga", email="jackkweyunga@gmail.com" },
+]
+description = "Unique codes generator python client"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">3"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jackkweyunga/unique-codes-generator"
+"Bug Tracker" = "https://github.com/jackkweyunga/unique-codes-generator/issues"
+
+[options]
+install_requires = [
+    "grpcio==1.63.0",
+    "grpcio-tools==1.63.0",
+    "protobuf==5.26.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
+[tool.setuptools_scm]
+root = '../..'
+write_to = "clients/python/src/ucg_client/_version.py"
+
+[tool.setuptools.dynamic]
+version = {attr = "ucg_client.__version__"}

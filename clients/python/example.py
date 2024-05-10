@@ -1,6 +1,5 @@
 import grpc
-
-import generator_pb2, generator_pb2_grpc
+from ucg_client import generator_pb2, generator_pb2_grpc
 
 channel = grpc.insecure_channel('localhost:5000')
 stub = generator_pb2_grpc.GeneratorStub(channel)
@@ -17,4 +16,4 @@ codes = stub.GenerateUniqueCodes(
         count=100
     )
 )
-print(codes.codes)
+print(codes)

@@ -36,6 +36,7 @@ namespaces = false
 [tool.setuptools_scm]
 root = '../..'
 write_to = "clients/python/src/ucg_client/_version.py"
+version_scheme = "post-release"
 
 [tool.setuptools.dynamic]
 version = {attr = "ucg_client.__version__"}

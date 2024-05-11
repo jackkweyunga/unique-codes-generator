@@ -89,6 +89,9 @@ jobs:
     name: release 🐍 distributions 📦
     runs-on: ubuntu-latest
     needs: build-publish-py-client
+    permissions:
+      packages: write
+      contents: write
 
     steps:
       - name: Download artifact
@@ -150,6 +153,9 @@ jobs:
   build-publish-docker-image:
     name: build and push docker
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+
     steps:
 
       - name: checkout

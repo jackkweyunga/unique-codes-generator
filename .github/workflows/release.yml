@@ -88,7 +88,7 @@ jobs:
   release:
     name: release 🐍 distributions 📦
     runs-on: ubuntu-latest
-    needs: build-publish-py-client
+    needs: build-upload-py-client
     permissions:
       packages: write
       contents: write
@@ -115,7 +115,7 @@ jobs:
     permissions:
       id-token: write
 
-    needs: [ build-publish-py-client, check-secret ]
+    needs: [ build-upload-py-client, check-secret ]
     if: needs.check-secret.outputs.test-pypi-api-token == 'true'
     steps:
       - name: Download artifact
@@ -137,7 +137,7 @@ jobs:
     permissions:
       id-token: write
 
-    needs: [ build-publish-py-client, check-secret ]
+    needs: [ build-upload-py-client, check-secret ]
     if: needs.check-secret.outputs.pypi-api-token == 'true'
     steps:
       - name: Download artifact

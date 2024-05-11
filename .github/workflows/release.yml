@@ -106,8 +106,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            "*.gz"
-            "*.whl"
+            *.gz
+            *.whl
 
   publish-test-pypi:
     name: publish to test pypi

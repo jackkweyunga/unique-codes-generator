@@ -52,7 +52,7 @@ jobs:
         env:
           PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
 
-  build-publish-py-client:
+  build-upload-py-client:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-latest
 
@@ -102,17 +102,18 @@ jobs:
         run: ls -R
       - name: make a github release
         id: new-release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
           files: |
-            *.gz
-            *.whl
+            "*.gz"
+            "*.whl"
 
   publish-test-pypi:
     name: publish to test pypi
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     needs: [ build-publish-py-client, check-secret ]
     if: needs.check-secret.outputs.test-pypi-api-token == 'true'
@@ -133,6 +134,8 @@ jobs:
   publish-pypi:
     name: publish to pypi
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     needs: [ build-publish-py-client, check-secret ]
     if: needs.check-secret.outputs.pypi-api-token == 'true'
